@@ -2,6 +2,6 @@ package parser
 
 import "fmt"
 
-func YAMLParser() {
-	fmt.Println(312)
+func YAMLParser(filePath string) {
+	fmt.Println(filePath)
 }
