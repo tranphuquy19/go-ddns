@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/thatisuday/commando"
 )
 
@@ -29,19 +27,19 @@ func main() {
 		Register(nil).
 		AddFlag("config,c", "config file path. Supported YAML, JSON file (default: ddns.yaml or ddns.json)", commando.String, nil).
 		AddFlag("profile-path,p", "profiles file path", commando.String, ".credentials").
-		SetAction(func(args map[string]commando.ArgValue, flags map[string]commando.FlagValue) {
-			fmt.Printf("Printing options of the `root` command...\n\n")
+		SetAction(handler)
 
-			// print arguments
-			for k, v := range args {
-				fmt.Printf("arg -> %v: %v(%T)\n", k, v.Value, v.Value)
-			}
-
-			// print flags
-			for k, v := range flags {
-				fmt.Printf("flag -> %v: %v(%T)\n", k, v.Value, v.Value)
-			}
-		})
+	commando.
+		Register("profile").
+		SetShortDescription("manages the profile list").
+		SetDescription("Description of profile").
+		AddArgument("add", "create a new profile", "'default'").
+		AddFlag("token,t", "API token (ClouldFlare, Netlify, etc.)", commando.String, "NONE").
+		AddFlag("username,u", "your login username", commando.String, "NONE").
+		AddFlag("password,p", "your login password", commando.String, "NONE").
+		AddFlag("path,i", "path of credentials, where the profile file saved", commando.String, "./.credentials").
+		AddArgument("remove", "remove existed profile", "'default'").
+		SetAction(handler)
 
 	commando.Parse(nil)
 }
