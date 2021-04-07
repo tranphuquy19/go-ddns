@@ -1,0 +1,83 @@
+{
+  "config": [
+    {
+      "provider": "Netlify",
+      "profile": "my-netlify-credential",
+      "domains": [
+        {
+          "name": "domain1.tk",
+          "records": [
+            {
+              "name": "api",
+              "type": "A",
+              "TTL": 1,
+              "value": {
+                "type": "IPv4",
+                "value": "102.145.20.72"
+              },
+              "interval": {
+                "unit": "minute",
+                "value": 1
+              }
+            },
+            {
+              "name": "mysql",
+              "type": "A",
+              "TTL": 1,
+              "value": {
+                "type": "CNAME",
+                "value": "database.ddns.net"
+              },
+              "interval": {
+                "unit": "second",
+                "value": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "domain3.tk",
+          "records": [
+            {
+              "name": "api.dev",
+              "type": "A",
+              "TTL": 1,
+              "value": {
+                "type": "IPv4",
+                "value": "102.145.20.72"
+              },
+              "interval": {
+                "unit": "minute",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "provider": "CloudFlare",
+      "profile": "my-cloudflare-credential",
+      "domains": [
+        {
+          "name": "domain2.tk",
+          "records": [
+            {
+              "name": "api.dev",
+              "type": "A",
+              "TTL": 1,
+              "value": {
+                "type": "IPv4",
+                "value": "102.145.20.72"
+              },
+              "interval": {
+                "unit": "day",
+                "value": 1
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
