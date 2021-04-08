@@ -27,7 +27,7 @@ func main() {
 		Register(nil).
 		AddFlag("config,c", "config file path. Supported YAML, JSON file (default: ddns.yaml or ddns.json)", commando.String, nil).
 		AddFlag("profile-path,p", "profiles file path", commando.String, ".credentials").
-		SetAction(handler)
+		SetAction(rootHandler)
 
 	commando.
 		Register("profile").
@@ -39,7 +39,7 @@ func main() {
 		AddFlag("password,p", "your login password", commando.String, "NONE").
 		AddFlag("path,i", "path of credentials, where the profile file saved", commando.String, "./.credentials").
 		AddArgument("remove", "remove existed profile", "'default'").
-		SetAction(handler)
+		SetAction(profileHandler)
 
 	commando.Parse(nil)
 }
