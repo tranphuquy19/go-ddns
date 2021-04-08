@@ -11,7 +11,7 @@ import (
 
 func info() {
 	app.Name = "go-ddns"
-	app.Usage = "a powerful tool dynamic DNS client in Go."
+	app.Usage = "a powerful dynamic DNS client tool in Go. Support: Clouldlare, Netlify, etc."
 	app.Author = "github.com/tranphuquy19"
 	app.Version = "0.0.2"
 }
@@ -29,7 +29,7 @@ func commands() {
 					Flags: []cli.Flag{
 						cli.StringFlag{
 							Name:     "token, t",
-							Usage:    "add API token (ClouldFlare, Netlify, etc.): `TOKEN`",
+							Usage:    "add API token (Clouldflare, Netlify, etc.): `TOKEN`",
 							Required: false,
 						},
 						cli.StringFlag{
