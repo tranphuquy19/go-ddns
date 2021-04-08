@@ -4,7 +4,7 @@ import "github.com/urfave/cli"
 
 func info() {
 	app.Name = "go-ddns"
-	app.Usage = "A simple dynamic dns client in Go."
+	app.Usage = "a simple dynamic dns client in Go."
 	app.Author = "github.com/tranphuquy19"
 	app.Version = "0.0.2"
 }
