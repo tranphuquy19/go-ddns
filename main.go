@@ -1,10 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"os"
-
 	"github.com/urfave/cli"
 )
 
@@ -17,10 +13,7 @@ func main() {
 	info()
 	commands()
 
-	fmt.Println("value " + configPath)
+	// fmt.Println("value " + configPath)
 
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatal(err)
-	}
+	err()
 }

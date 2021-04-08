@@ -1,10 +1,17 @@
 package main
 
-import "github.com/urfave/cli"
+import (
+	"fmt"
+	"log"
+	"os"
+	"sort"
+
+	"github.com/urfave/cli"
+)
 
 func info() {
 	app.Name = "go-ddns"
-	app.Usage = "a simple dynamic dns client in Go."
+	app.Usage = "a powerful tool dynamic DNS client in Go."
 	app.Author = "github.com/tranphuquy19"
 	app.Version = "0.0.2"
 }
@@ -12,8 +19,9 @@ func info() {
 func commands() {
 	app.Commands = []cli.Command{
 		{
-			Name:  "profile",
-			Usage: "manage the profiles",
+			Name:    "profile",
+			Aliases: []string{"p"},
+			Usage:   "manage the profiles",
 			Subcommands: []cli.Command{
 				{
 					Name:  "add",
@@ -48,21 +56,58 @@ func commands() {
 					},
 				},
 			},
+			Action: func(c *cli.Context) error {
+				profileName := "default"
+				if c.NArg() > 0 {
+					profileName = c.Args().First()
+				}
+				fmt.Println(profileName)
+				return nil
+			},
+		},
+		{
+			Name:    "run",
+			Aliases: []string{"r"},
+			Usage:   "start the app",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:        "config, c",
+					Value:       "ddns.yaml | ddns.json",
+					Required:    false,
+					Usage:       "config file path. Supported YAML, JSON file",
+					EnvVar:      "CONFIG_PATH",
+					Destination: &configPath,
+				},
+				cli.StringFlag{
+					Name:        "profile-path, p",
+					Value:       ".credentials",
+					Required:    false,
+					Usage:       "profiles file path",
+					EnvVar:      "CREDENTIALS_PATH",
+					Destination: &profilePath,
+				},
+			},
+			Action: func(c *cli.Context) error {
+				context, _ := os.Getwd()
+				if c.NArg() > 0 {
+					a := c.Args().First()
+					if a != "." {
+						context = a
+					}
+				}
+				fmt.Println(context)
+				return nil
+			},
 		},
 	}
 
-	app.Flags = []cli.Flag{
-		cli.StringFlag{
-			Name:        "config, c",
-			Value:       "ddns.yaml | ddns.json",
-			Usage:       "config file path. Supported YAML, JSON file",
-			Destination: &configPath,
-		},
-		cli.StringFlag{
-			Name:        "profile-path, p",
-			Value:       ".credentials",
-			Usage:       "profiles file path",
-			Destination: &profilePath,
-		},
+	sort.Sort(cli.FlagsByName(app.Flags))
+	sort.Sort(cli.CommandsByName(app.Commands))
+}
+
+func err() {
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
