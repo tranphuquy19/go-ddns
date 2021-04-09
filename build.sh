@@ -36,15 +36,13 @@ while read line; do
     mkdir -p build/$GOOS/$GOARCH
     output_path="$WORKING_DIR/build/$GOOS/$GOARCH/$output_name"
 
-    echo "Building for OS=$GOOS Architecture=$GOARCH"
-
-    GOOS=$GOOS GOARCH=$GOARCH go build -o $output_path
+    echo "Building for OS=$GOOS Architecture=$GOARCH" && env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_path
 
     if [ ! -f $output_path ]; then
         echo "Failed when build for OS=$GOOS Architecture=$GOARCH"
         exit 1
     else
-        fileSize=$(find "$fileName" -printf "%s")
+        fileSize=$(find "$output_path" -printf "%s")
         echo "Done with output file: $output_path ($fileSize bytes)"
     fi
 
