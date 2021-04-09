@@ -2,12 +2,40 @@ package main
 
 import (
 	"fmt"
+	"go-ddns/util"
 	"log"
 	"os"
+	"path"
 	"sort"
 
 	"github.com/urfave/cli"
 )
+
+func runAction(c *cli.Context) error {
+	context, _ := os.Getwd()
+	if c.NArg() > 0 {
+		a := c.Args().First()
+		if a != "." {
+			context = a
+		}
+	}
+	configFileFullPath := path.Join(context, configPath)
+	if util.FileExists(configFileFullPath) {
+		fmt.Println(configFileFullPath, "is valid")
+	} else {
+		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
+	}
+	return nil
+}
+
+func profileAction(c *cli.Context) error {
+	profileName := "default"
+	if c.NArg() > 0 {
+		profileName = c.Args().First()
+	}
+	fmt.Println(profileName)
+	return nil
+}
 
 func info() {
 	app.Name = "go-ddns"
@@ -56,14 +84,7 @@ func commands() {
 					},
 				},
 			},
-			Action: func(c *cli.Context) error {
-				profileName := "default"
-				if c.NArg() > 0 {
-					profileName = c.Args().First()
-				}
-				fmt.Println(profileName)
-				return nil
-			},
+			Action: profileAction,
 		},
 		{
 			Name:    "run",
@@ -87,17 +108,7 @@ func commands() {
 					Destination: &profilePath,
 				},
 			},
-			Action: func(c *cli.Context) error {
-				context, _ := os.Getwd()
-				if c.NArg() > 0 {
-					a := c.Args().First()
-					if a != "." {
-						context = a
-					}
-				}
-				fmt.Println(context)
-				return nil
-			},
+			Action: runAction,
 		},
 	}
 
