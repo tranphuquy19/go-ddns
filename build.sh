@@ -35,7 +35,7 @@ while read line; do
 
     mkdir -p build/$GOOS/$GOARCH
 
-    echo "Building for OS=$GOOS PLATFORM=$GOARCH"
+    echo "Building for OS=$GOOS Architecture=$GOARCH"
     env GOOS=$GOOS GOARCH=$GOARCH go build -o $WORKING_DIR/build/$GOOS/$GOARCH/$output_name
 
     if [ $? -ne 0 ]; then
