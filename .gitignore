@@ -3,6 +3,8 @@
 ddns.json
 ddns.yaml
 test.yaml
+go-ddns
+go-ddns.exe
 
 # Ignore executable files in build folder
 build/*
