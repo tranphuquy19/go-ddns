@@ -4,6 +4,9 @@ ddns.json
 ddns.yaml
 test.yaml
 
+# Ignore executable files in build folder
+build/*
+
 # Ignore .idea
 .idea
 
