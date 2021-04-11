@@ -16,6 +16,7 @@ type Domain struct {
 }
 
 type Record struct {
-	Name  string `yaml:"name"`
-	Value string `yaml:"value"`
+	Name  	string `yaml:"name"`
+	Value 	string `yaml:"value"`
+	Type 	string `yaml:"type"`
 }

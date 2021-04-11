@@ -20,6 +20,9 @@ rm -rf ./build
 echo "Create build folder"
 mkdir -p build
 
+# install dependencies
+go build
+
 # read platforms file
 while read line; do
     temp=(${line//\// })
