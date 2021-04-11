@@ -21,6 +21,7 @@ echo "Create build folder"
 mkdir -p build
 
 # install dependencies
+echo "Install dependencies"
 go mod download
 
 # read platforms file
