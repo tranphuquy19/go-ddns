@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-ddns/parser"
 	"go-ddns/util"
 	"log"
 	"os"
@@ -21,7 +22,7 @@ func runAction(c *cli.Context) error {
 	}
 	configFileFullPath := path.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
-		fmt.Println(configFileFullPath, "is valid")
+		parser.YAMLParser(configFileFullPath)
 	} else {
 		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
 	}

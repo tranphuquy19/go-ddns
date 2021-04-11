@@ -1,50 +1,23 @@
----
-config:
-  - provider: Netlify
+provider: 
+  - name: Netlify
     profile: my-netlify-credential
     domains:
-      - name: domain1.tk
+      - name: example.tk
         records:
-          - name: api
-            type: A
-            TTL: 1
-            value:
-              type: IPv4
-              value: 102.145.20.72
-            interval:
-              unit: minute
-              value: 1
-          - name: mysql
-            type: A
-            TTL: 1
-            value:
-              type: CNAME
-              value: database.ddns.net
-            interval:
-              unit: second
-              value: 1
-      - name: domain3.tk
-        records:
-          - name: api.dev
-            type: A
-            TTL: 1
-            value:
-              type: IPv4
-              value: 102.145.20.72
-            interval:
-              unit: minute
-              value: 1
-  - provider: CloudFlare
+          - name: "@"
+            value: 1.2.3.4
+            type: IPv4
+          - name: pgadmin
+            value: test
+            type: TXT
+  - name: Cloudflare
     profile: my-cloudflare-credential
     domains:
-      - name: domain2.tk
+      - name: example.tk
         records:
-          - name: api.dev
-            type: A
-            TTL: 1
-            value:
-              type: IPv4
-              value: 102.145.20.72
-            interval:
-              unit: day
-              value: 1
+          - name: "@"
+            value: 1.2.3.4
+            type: IPv4
+          - name: pgadmin
+            value: test
+            type: TXT    
