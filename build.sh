@@ -59,4 +59,8 @@ while read line; do
     fi
 done < $PLATFORMS_FILE
 
+# Clean task
+echo "Clean build"
+go mod tidy
+
 echo "DONE"
