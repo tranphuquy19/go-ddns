@@ -40,9 +40,10 @@ func profileAction(c *cli.Context) error {
 
 func info() {
 	app.Name = "go-ddns"
-	app.Usage = "a powerful dynamic DNS client tool in Go. Support: Clouldlare, Netlify, etc."
+	app.Usage = "a powerful dynamic DNS client tool in Go. Support: Cloudflare, Netlify, etc."
 	app.Author = "github.com/tranphuquy19"
 	app.Version = "0.0.2"
+	app.EnableBashCompletion = true
 }
 
 func commands() {
