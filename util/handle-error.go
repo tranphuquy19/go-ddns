@@ -1,9 +1,12 @@
 package util
 
-import "log"
+import (
+	"log"
+	"strings"
+)
 
-func HandleError(message string, err error) {
+func HandleError(err error, messages ...string) {
 	if err != nil {
-		log.Fatal(message, err)
+		log.Fatal(strings.Join(messages, ". "))
 	}
 }

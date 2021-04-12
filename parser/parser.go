@@ -13,13 +13,15 @@ func YAMLParser(filePath string) {
 
 	yamlFile, e1 := ioutil.ReadFile(filePath)
 
-	util.HandleError("An error occurred while reading the YAML file", e1)
+	util.HandleError(e1, "An error occurred while reading the YAML file")
 
 	e2 := yaml.Unmarshal(yamlFile, &config)
 
-	util.HandleError("An error occurred while passing the YAML file", e2)
+	util.HandleError(e2, "An error occurred while passing the YAML file")
 
-	fmt.Println(config.Providers[0].Domains[0].Records[0].Value)
+	fmt.Println(config.Providers[0].Domains[0].Name)
+
+	YAMLValidator(config)
 
 	fmt.Println(filePath)
 }

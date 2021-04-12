@@ -20,6 +20,9 @@ func runAction(c *cli.Context) error {
 			context = a
 		}
 	}
+	if configPath == "ddns.yaml | ddns.json" {
+		configPath = "ddns.yaml"
+	}
 	configFileFullPath := path.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
 		parser.YAMLParser(configFileFullPath)
