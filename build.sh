@@ -62,5 +62,6 @@ done < $PLATFORMS_FILE
 # Clean task
 echo "Clean build"
 go mod tidy
+rm -rf ./build
 
 echo "DONE"
