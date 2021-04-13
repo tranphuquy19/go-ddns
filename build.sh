@@ -43,7 +43,7 @@ while read line; do
     echo "===================================================="
     echo "Building for OS=$GOOS Architecture=$GOARCH" 
     
-    env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_path
+    env GOOS=$GOOS GOARCH=$GOARCH go build -ldflags="-s -w" -o $output_path
 
     if [ ! -f $output_path ]; then
         echo "Failed when build for OS=$GOOS Architecture=$GOARCH"
