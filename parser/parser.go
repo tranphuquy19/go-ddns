@@ -2,6 +2,7 @@ package parser
 
 import (
 	"fmt"
+	client "go-ddns/clients"
 	"go-ddns/util"
 	"io/ioutil"
 
@@ -16,12 +17,13 @@ func YAMLParser(filePath string) {
 	util.HandleError(e1, "An error occurred while reading the YAML file")
 
 	e2 := yaml.Unmarshal(yamlFile, &config)
-
 	util.HandleError(e2, "An error occurred while passing the YAML file")
-
-	fmt.Println(config.Providers[0].Domains[0].Name)
 
 	YAMLValidator(config)
 
-	fmt.Println(filePath)
+	// test http-client - Get current public IP
+	baseUrl := "http://api.ipify.org"
+	client := client.InitClient(baseUrl, "", "")
+	res, _ := client.Get()
+	fmt.Println("Your IP: ", res)
 }
