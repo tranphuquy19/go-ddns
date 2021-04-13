@@ -6,7 +6,7 @@ import (
 	"go-ddns/util"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"sort"
 
 	"github.com/urfave/cli"
@@ -23,7 +23,7 @@ func runAction(c *cli.Context) error {
 	if configPath == "ddns.yaml | ddns.json" {
 		configPath = "ddns.yaml"
 	}
-	configFileFullPath := path.Join(context, configPath)
+	configFileFullPath := filepath.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
 		parser.YAMLParser(configFileFullPath)
 	} else {
