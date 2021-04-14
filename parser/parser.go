@@ -1,15 +1,13 @@
 package parser
 
 import (
-	"fmt"
-	client "go-ddns/clients"
 	"go-ddns/util"
 	"io/ioutil"
 
 	"gopkg.in/yaml.v2"
 )
 
-func YAMLParser(filePath string) {
+func YAMLParser(filePath string) Config {
 	config := Config{}
 
 	yamlFile, e1 := ioutil.ReadFile(filePath)
@@ -21,9 +19,5 @@ func YAMLParser(filePath string) {
 
 	YAMLValidator(config)
 
-	// test http-client - Get current public IP
-	baseUrl := "http://api.ipify.org"
-	client := client.InitClient(baseUrl, "", "")
-	res, _ := client.Get()
-	fmt.Println("Your IP: ", res)
+	return config
 }

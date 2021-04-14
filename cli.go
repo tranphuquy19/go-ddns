@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/urfave/cli"
 )
@@ -25,7 +26,18 @@ func runAction(c *cli.Context) error {
 	}
 	configFileFullPath := filepath.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
-		parser.YAMLParser(configFileFullPath)
+		config := parser.YAMLParser(configFileFullPath)
+		for _, provider := range config.Providers {
+			for _, domain := range provider.Domains {
+				for _, record := range domain.Records {
+					recordType := strings.ToLower(record.Type)
+					switch recordType {
+					case "get", "post": 
+						
+					}
+				}
+			}
+		}
 	} else {
 		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
 	}
