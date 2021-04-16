@@ -12,6 +12,7 @@ var scheduler = gocron.NewScheduler(time.UTC)
 
 var configPath string
 var profilePath string
+var forever bool = true
 
 func main() {
 	info()
@@ -26,6 +27,8 @@ func main() {
 	err()
 
 	for {
-		select {}
+		if forever {
+			select {}
+		}
 	}
 }

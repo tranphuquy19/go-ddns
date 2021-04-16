@@ -40,6 +40,7 @@ func runAction(c *cli.Context) error {
 		}
 	} else {
 		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
+		forever = false
 	}
 	return nil
 }
@@ -137,5 +138,6 @@ func err() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+		forever = false
 	}
 }
