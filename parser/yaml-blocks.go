@@ -16,10 +16,10 @@ type Domain struct {
 }
 
 type Record struct {
-	Name    string    `yaml:"name" validate:"required"`
-	Value   string    `yaml:"value" validate:"required"`
-	Type    string    `yaml:"type" validate:"required"`
-	Trigger []Trigger `yaml:"trigger" validate:"required,dive,required"`
+	Name    string  `yaml:"name" validate:"required"`
+	Value   string  `yaml:"value" validate:"required"`
+	Type    string  `yaml:"type" validate:"required"`
+	Trigger Trigger `yaml:"trigger" validate:"required,dive,required"`
 }
 
 type Trigger struct {
