@@ -12,22 +12,18 @@ var scheduler = gocron.NewScheduler(time.UTC)
 
 var configPath string
 var profilePath string
-var forever bool = true
+var forever bool = false
 
 func main() {
 	info()
 	commands()
 
-	// fmt.Println("value " + configPath)
-
-	// test scheduler
-	// scheduler.Every(5).Seconds().Do(task1)
 	scheduler.StartAsync()
 
 	err()
 
-	for {
-		if forever {
+	if forever {
+		for {
 			select {}
 		}
 	}

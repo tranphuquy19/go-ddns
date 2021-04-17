@@ -27,20 +27,25 @@ func runAction(c *cli.Context) error {
 	configFileFullPath := filepath.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
 		config := parser.YAMLParser(configFileFullPath)
+		forever = true
 		for _, provider := range config.Providers {
 			for _, domain := range provider.Domains {
 				for _, record := range domain.Records {
-					recordType := strings.ToLower(record.Type)
+					recordType, recordValue := strings.ToLower(record.Type), strings.ToLower(record.Value)
 					switch recordType {
-					case "get", "post": 
-						
+					case "get", "post":
+						triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value
+						if triggerType == "cron_job" {
+							scheduler.Cron(triggerValue).Do(func() {
+								getIP(recordValue, recordType)
+							})
+						}
 					}
 				}
 			}
 		}
 	} else {
 		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
-		forever = false
 	}
 	return nil
 }
