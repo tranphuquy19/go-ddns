@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
 	"github.com/urfave/cli"
 )
@@ -25,7 +26,24 @@ func runAction(c *cli.Context) error {
 	}
 	configFileFullPath := filepath.Join(context, configPath)
 	if util.FileExists(configFileFullPath) {
-		parser.YAMLParser(configFileFullPath)
+		config := parser.YAMLParser(configFileFullPath)
+		forever = true
+		for _, provider := range config.Providers {
+			for _, domain := range provider.Domains {
+				for _, record := range domain.Records {
+					recordType, recordValue := strings.ToLower(record.Type), strings.ToLower(record.Value)
+					switch recordType {
+					case "get", "post":
+						triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value
+						if triggerType == "cron_job" {
+							scheduler.Cron(triggerValue).Do(func() {
+								getIP(recordValue, recordType)
+							})
+						}
+					}
+				}
+			}
+		}
 	} else {
 		fmt.Printf("Config file: %s does not exist\n", configFileFullPath)
 	}
@@ -125,5 +143,6 @@ func err() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+		forever = false
 	}
 }
