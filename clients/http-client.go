@@ -51,3 +51,23 @@ func (c *HttpClient) Get() (string, error) {
 
 	return bodyStr, err
 }
+
+func (c *HttpClient) Post() (string, error) {
+	req, err := http.NewRequest("POST", c.BaseURL, nil)
+	if err != nil {
+		return "", err
+	}
+
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("%s %s", c.Token.TokenType, c.Token.TokenChain))
+
+	res, err := c.HTTPClient.Do(req)
+	if err != nil {
+		return "", err
+	}
+
+	body, _ := io.ReadAll(res.Body)
+	bodyStr := string(body)
+
+	return bodyStr, err
+}
