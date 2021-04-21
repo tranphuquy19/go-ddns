@@ -9,7 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func YAMLParser(filePath string) Config {
+func ConfigYAMLParser(filePath string) Config {
 	config := Config{}
 
 	yamlFile, e1 := ioutil.ReadFile(filePath)

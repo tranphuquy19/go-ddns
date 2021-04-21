@@ -33,7 +33,7 @@ func runAction(c *cli.Context) error {
 	}
 
 	if util.FileExists(configFileFullPath) {
-		config := parser.YAMLParser(configFileFullPath)
+		config := parser.ConfigYAMLParser(configFileFullPath)
 		forever = true
 		for _, provider := range config.Providers {
 			profile := provider.Profile
