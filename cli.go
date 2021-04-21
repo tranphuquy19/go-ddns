@@ -41,7 +41,7 @@ func runAction(c *cli.Context) error {
 			fmt.Println("Using profile:", temp)
 			for _, domain := range provider.Domains {
 				for _, record := range domain.Records {
-					recordType, recordValue := strings.ToLower(record.Type), strings.ToLower(record.Value)
+					recordType, recordValue := strings.ToLower(record.Source.Type), strings.ToLower(record.Source.Value)
 					switch recordType {
 					case "get", "post":
 						triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value

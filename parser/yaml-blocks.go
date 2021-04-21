@@ -17,9 +17,13 @@ type Domain struct {
 
 type Record struct {
 	Name    string  `yaml:"name" validate:"required"`
-	Value   string  `yaml:"value" validate:"required"`
-	Type    string  `yaml:"type" validate:"required"`
+	Source  Source  `yaml:"source" validate:"required,dive,required"`
 	Trigger Trigger `yaml:"trigger" validate:"required,dive,required"`
+}
+
+type Source struct {
+	Value string `yaml:"value" validate:"required"`
+	Type  string `yaml:"type" validate:"required"`
 }
 
 type Trigger struct {

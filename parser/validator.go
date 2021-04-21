@@ -40,28 +40,28 @@ func recordValidator(sl validator.StructLevel) {
 	for _, provider := range config.Providers {
 		for _, domain := range provider.Domains {
 			for _, record := range domain.Records {
-				lwRecordStr := strings.ToLower(record.Type)
+				lwRecordStr := strings.ToLower(record.Source.Type)
 
 				// check record type
 				if !util.Contains(recordTypes, lwRecordStr) {
-					sl.ReportError(record.Type, "type", "Type", "record_type", "")
+					sl.ReportError(record.Source.Type, "type", "Type", "record_type", "")
 				}
 
 				// check record value
 				var valueErr error
 				switch lwRecordStr {
 				case "ipv4":
-					valueErr = validate.Var(record.Value, "ip4_addr")
+					valueErr = validate.Var(record.Source.Value, "ip4_addr")
 				case "ipv6":
-					valueErr = validate.Var(record.Value, "ip6_addr")
+					valueErr = validate.Var(record.Source.Value, "ip6_addr")
 				case "txt":
-					valueErr = validate.Var(record.Value, "ascii")
+					valueErr = validate.Var(record.Source.Value, "ascii")
 				case "get", "post", "nslookup":
-					valueErr = validate.Var(record.Value, "uri")
+					valueErr = validate.Var(record.Source.Value, "uri")
 				}
 
 				if valueErr != nil {
-					sl.ReportError(record.Value, "type", "Value", "record_value", "")
+					sl.ReportError(record.Source.Value, "type", "Value", "record_value", "")
 				}
 			}
 		}

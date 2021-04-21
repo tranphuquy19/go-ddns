@@ -5,29 +5,52 @@ provider:
       - name: example.tk
         records:
           - name: "@"
-            value: 1.2.3.4
-            type: IPv4
+            type: "A"
+            source:
+              value: 1.2.3.4
+              type: IPv4
             trigger:
               type: cron_job
               value: "0,15,30,45 * * * *"
+
           - name: pgadmin
-            value: test
-            type: TXT
+            type: "TXT"
+            source:
+              value: "test-string"
+              type: TXT
+            trigger:
+              type: cron_job
+              value: "0,15,30,45 * * * *"
+
           - name: api
-            value: api.ipify.org
-            type: GET
+            type: "A"
+            source:
+              value: https://api.ipify.org
+              type: GET
             trigger:
               type: SPEC_TIME
               # Support format: YYYY/MM/DD HH:mm:ss and UTC, ISO, GMT, Unix Epoch
               values: ["2021/04/12 00:40:30", "2021-04-11T17:37:36.295Z", "Sun, 11 Apr 2021 17:38:06 GMT", "1618163331556"]
+
   - name: Cloudflare
     profile: my-cloudflare-credential
     domains:
       - name: example.tk
         records:
           - name: "@"
-            value: 1.2.3.4
-            type: IPv4
+            type: "A"
+            source:
+              value: 1.2.3.4
+              type: IPv4
+            trigger:
+              type: cron_job
+              value: "0,15,30,45 * * * *"
+
           - name: pgadmin
-            value: test
-            type: TXT    
+            type: "TXT"
+            source:
+              value: test
+              type: TXT
+            trigger:
+              type: cron_job
+              value: "0,15,30,45 * * * *"
