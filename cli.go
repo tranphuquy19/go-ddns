@@ -25,10 +25,22 @@ func runAction(c *cli.Context) error {
 		configPath = "ddns.yaml"
 	}
 	configFileFullPath := filepath.Join(context, configPath)
+	configProfilePath := filepath.Join(context, profilePath)
+
+	if !util.FileExists(configProfilePath) {
+		forever = false
+		fmt.Printf("Credentials file: %s does not exist\n", configProfilePath)
+	}
+
 	if util.FileExists(configFileFullPath) {
 		config := parser.YAMLParser(configFileFullPath)
 		forever = true
 		for _, provider := range config.Providers {
+			profile := provider.Profile
+			// temp := parser.TOMLGetProfile(configProfilePath, profile)
+			fmt.Println("======================", profile)
+			fmt.Println("======================", configProfilePath)
+			// fmt.Println("======================", temp)
 			for _, domain := range provider.Domains {
 				for _, record := range domain.Records {
 					recordType, recordValue := strings.ToLower(record.Type), strings.ToLower(record.Value)
