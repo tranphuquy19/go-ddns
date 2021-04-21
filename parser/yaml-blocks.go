@@ -23,6 +23,7 @@ type Record struct {
 }
 
 type Trigger struct {
-	Value string `yaml:"value" validate:"required"`
-	Type  string `yaml:"type" validate:"required"`
+	Value  string   `yaml:"value"`
+	Type   string   `yaml:"type" validate:"required"`
+	Values []string `yaml:"values"`
 }
