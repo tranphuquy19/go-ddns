@@ -26,7 +26,6 @@ func YAMLParser(filePath string) Config {
 
 func TOMLGetProfile(filePath string, profile string) string {
 	tomlContent, err := ioutil.ReadFile(filePath)
-
 	util.HandleError(err, "An error occurred while reading the Credentials file")
 
 	tomlFile, _ := toml.Load(string(tomlContent))

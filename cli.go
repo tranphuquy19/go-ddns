@@ -37,10 +37,8 @@ func runAction(c *cli.Context) error {
 		forever = true
 		for _, provider := range config.Providers {
 			profile := provider.Profile
-			// temp := parser.TOMLGetProfile(configProfilePath, profile)
-			fmt.Println("======================", profile)
-			fmt.Println("======================", configProfilePath)
-			// fmt.Println("======================", temp)
+			temp := parser.TOMLGetProfile(configProfilePath, profile)
+			fmt.Println("Using profile:", temp)
 			for _, domain := range provider.Domains {
 				for _, record := range domain.Records {
 					recordType, recordValue := strings.ToLower(record.Type), strings.ToLower(record.Value)
