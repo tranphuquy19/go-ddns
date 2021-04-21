@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	client "go-ddns/clients"
 	"go-ddns/parser"
 	"go-ddns/util"
 	"log"
@@ -36,19 +37,24 @@ func runAction(c *cli.Context) error {
 		config := parser.ConfigYAMLParser(configFileFullPath)
 		forever = true
 		for _, provider := range config.Providers {
-			profile := provider.Profile
-			temp := parser.TOMLGetProfile(configCredentialsPath, profile)
-			fmt.Println("Using profile:", temp)
+			profile, providerName := provider.Profile, strings.ToLower(provider.Name)
+			token := parser.TOMLGetProfile(configCredentialsPath, profile)
+			fmt.Println("Using profile:", token)
 			for _, domain := range provider.Domains {
+				domainName := domain.Name
 				for _, record := range domain.Records {
 					recordType, recordValue := strings.ToLower(record.Source.Type), strings.ToLower(record.Source.Value)
 					switch recordType {
 					case "get", "post":
 						triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value
 						if triggerType == "cron_job" {
-							scheduler.Cron(triggerValue).Do(func() {
-								getIP(recordValue, recordType)
-							})
+							switch providerName {
+							case "netlify":
+								scheduler.Cron(triggerValue).Do(func() {
+									ip := getIP(recordValue, recordType)
+									client.NetlifyUpdateRecord(domainName, record.Name, ip, record.TTL, token)
+								})
+							}
 						}
 					}
 				}

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -31,8 +32,10 @@ func InitClient(baseUrl string, tokenChain string, tokenType string) *HttpClient
 	}
 }
 
-func (c *HttpClient) Get() (string, error) {
-	req, err := http.NewRequest("GET", c.BaseURL, nil)
+func (c *HttpClient) Get(endpoint ...string) (string, error) {
+	temp := append([]string{c.BaseURL}, endpoint...)
+	url := strings.Join(temp, "/")
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err
 	}
