@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	parser "go-ddns/parser"
 
 	"github.com/tidwall/gjson"
 )
@@ -16,7 +17,7 @@ func GetDNSZones(client HttpClient) gjson.Result {
 	return gjson.Parse(res)
 }
 
-func NetlifyUpdateRecord(domain string, record string, value string, ttl uint32, token string) {
+func NetlifyUpdateRecord(domainName string, record *parser.Record, token string) {
 	client := InitNetlifyClient(token)
 	GetDNSZones(client).ForEach(func(key, zone gjson.Result) bool {
 		domain := gjson.Get(zone.String(), "name")

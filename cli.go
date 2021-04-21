@@ -52,7 +52,8 @@ func runAction(c *cli.Context) error {
 							case "netlify":
 								scheduler.Cron(triggerValue).Do(func() {
 									ip := getIP(recordValue, recordType)
-									client.NetlifyUpdateRecord(domainName, record.Name, ip, record.TTL, token)
+									fmt.Println(ip)
+									client.NetlifyUpdateRecord(domainName, &record, token)
 								})
 							}
 						}
