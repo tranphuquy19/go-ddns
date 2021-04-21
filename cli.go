@@ -25,11 +25,11 @@ func runAction(c *cli.Context) error {
 		configPath = "ddns.yaml"
 	}
 	configFileFullPath := filepath.Join(context, configPath)
-	configProfilePath := filepath.Join(context, profilePath)
+	configCredentialsPath := filepath.Join(context, credentialsPath)
 
-	if !util.FileExists(configProfilePath) {
+	if !util.FileExists(configCredentialsPath) {
 		forever = false
-		fmt.Printf("Credentials file: %s does not exist\n", configProfilePath)
+		fmt.Printf("Credentials file: %s does not exist\n", configCredentialsPath)
 	}
 
 	if util.FileExists(configFileFullPath) {
@@ -37,7 +37,7 @@ func runAction(c *cli.Context) error {
 		forever = true
 		for _, provider := range config.Providers {
 			profile := provider.Profile
-			temp := parser.TOMLGetProfile(configProfilePath, profile)
+			temp := parser.TOMLGetProfile(configCredentialsPath, profile)
 			fmt.Println("Using profile:", temp)
 			for _, domain := range provider.Domains {
 				for _, record := range domain.Records {
@@ -138,7 +138,7 @@ func commands() {
 					Required:    false,
 					Usage:       "profiles file path",
 					EnvVar:      "CREDENTIALS_PATH",
-					Destination: &profilePath,
+					Destination: &credentialsPath,
 				},
 			},
 			Action: runAction,

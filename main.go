@@ -11,7 +11,7 @@ var app = cli.NewApp()
 var scheduler = gocron.NewScheduler(time.UTC)
 
 var configPath string
-var profilePath string
+var credentialsPath string
 var forever bool = false
 
 func main() {
