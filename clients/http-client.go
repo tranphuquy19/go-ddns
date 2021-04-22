@@ -33,9 +33,20 @@ func InitClient(baseUrl string, tokenChain string, tokenType string) *HttpClient
 }
 
 func (c *HttpClient) Get(endpoint ...string) (string, error) {
+	return worker("GET", c, endpoint...)
+}
+
+func (c *HttpClient) Post(endpoint ...string) (string, error) {
+	return worker("POST", c, endpoint...)
+}
+
+func (c *HttpClient) Del(endpoint ...string) (string, error) {
+	return worker("DELETE", c, endpoint...)
+}
+
+func worker(method string, c *HttpClient, endpoint ...string) (string, error) {
 	url := util.ParseURL(c.BaseURL, endpoint...)
-	fmt.Println("URL", url)
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		return "", err
 	}
@@ -48,26 +59,6 @@ func (c *HttpClient) Get(endpoint ...string) (string, error) {
 		return "", err
 	}
 	defer res.Body.Close()
-
-	body, _ := io.ReadAll(res.Body)
-	bodyStr := string(body)
-
-	return bodyStr, err
-}
-
-func (c *HttpClient) Post() (string, error) {
-	req, err := http.NewRequest("POST", c.BaseURL, nil)
-	if err != nil {
-		return "", err
-	}
-
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("Authorization", fmt.Sprintf("%s %s", c.Token.TokenType, c.Token.TokenChain))
-
-	res, err := c.HTTPClient.Do(req)
-	if err != nil {
-		return "", err
-	}
 
 	body, _ := io.ReadAll(res.Body)
 	bodyStr := string(body)

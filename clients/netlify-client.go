@@ -8,7 +8,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-var client HttpClient
+var netlifyClient HttpClient
 
 func InitNetlifyClient(token string) HttpClient {
 	netlifyClient := InitClient("https://api.netlify.com/api/v1", token, "Bearer")
@@ -16,22 +16,22 @@ func InitNetlifyClient(token string) HttpClient {
 }
 
 func GetDNSZones() gjson.Result {
-	res, _ := client.Get("dns_zones")
+	res, _ := netlifyClient.Get("dns_zones")
 	return gjson.Parse(res)
 }
 
 func GetRecords(zoneId string) gjson.Result {
-	res, _ := client.Get(fmt.Sprintf("dns_zones/%s/dns_records", zoneId))
+	res, _ := netlifyClient.Get(fmt.Sprintf("dns_zones/%s/dns_records", zoneId))
 	return gjson.Parse(res)
 }
 
 func GetRecordById(zoneId string, recordId string, record *parser.Record) gjson.Result {
-	res, _ := client.Get(fmt.Sprintf("dns_zone/%s/dns_records/%s", zoneId, recordId))
+	res, _ := netlifyClient.Get(fmt.Sprintf("dns_zone/%s/dns_records/%s", zoneId, recordId))
 	return gjson.Parse(res)
 }
 
 func NetlifyUpdateRecord(domainName string, record *parser.Record, token string) {
-	client = InitNetlifyClient(token)
+	netlifyClient = InitNetlifyClient(token)
 	url := util.ParseRecordURL(record.Name, domainName)
 	fmt.Println(url)
 	zones := GetDNSZones().Array()
