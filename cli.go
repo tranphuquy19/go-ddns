@@ -95,7 +95,7 @@ func commands() {
 					Flags: []cli.Flag{
 						cli.StringFlag{
 							Name:     "token, t",
-							Usage:    "add API token (Clouldflare, Netlify, etc.): `TOKEN`",
+							Usage:    "add API token (Cloudflare, Netlify, etc.): `TOKEN`",
 							Required: false,
 						},
 						cli.StringFlag{
