@@ -22,7 +22,6 @@ func GetDNSZones() gjson.Result {
 
 func GetRecords(zoneId string) gjson.Result {
 	res, _ := client.Get(fmt.Sprintf("dns_zones/%s/dns_records", zoneId))
-	fmt.Println(zoneId, "=================")
 	return gjson.Parse(res)
 }
 
@@ -35,19 +34,18 @@ func NetlifyUpdateRecord(domainName string, record *parser.Record, token string)
 	client = InitNetlifyClient(token)
 	url := util.ParseRecordURL(record.Name, domainName)
 	fmt.Println(url)
-	GetDNSZones().ForEach(func(zoneKey, zone gjson.Result) bool {
-		domain := gjson.Get(zone.String(), "name").String()
-		zoneId := gjson.Get(zone.String(), "id").String()
-		fmt.Println("Domain:", domain, ",", "zoneId:", zoneId)
-		if domain == domainName {
-			GetRecords(zoneId).ForEach(func(recordKey, jRecord gjson.Result) bool {
-				recordId := jRecord.Get("id").String()
-				fmt.Println(recordKey, recordId)
-				return true
-			})
-			return true // keep iterating
-		} else {
-			return false // stop iterating
+	zones := GetDNSZones().Array()
+	for _, _zone := range zones {
+		jZone := gjson.Parse(_zone.Raw)
+		zoneName, zoneId := jZone.Get("name").String(), jZone.Get("id").String()
+		if zoneName == domainName {
+			records := GetRecords(zoneId).Array()
+			for _, _record := range records {
+				jRecord := gjson.Parse(_record.Raw)
+				recordName, recordId, recordType, recordValue := jRecord.Get("hostname").String(), jRecord.Get("id").String(), jRecord.Get("type").String(), jRecord.Get("value").String()
+				fmt.Println(recordName, recordId, recordType, recordValue)
+			}
+			break
 		}
-	})
+	}
 }
