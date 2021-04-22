@@ -2,9 +2,9 @@ package client
 
 import (
 	"fmt"
+	"go-ddns/util"
 	"io"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -33,8 +33,8 @@ func InitClient(baseUrl string, tokenChain string, tokenType string) *HttpClient
 }
 
 func (c *HttpClient) Get(endpoint ...string) (string, error) {
-	temp := append([]string{c.BaseURL}, endpoint...)
-	url := strings.Join(temp, "/")
+	url := util.ParseURL(c.BaseURL, endpoint...)
+	fmt.Println("URL", url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return "", err

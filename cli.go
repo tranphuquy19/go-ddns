@@ -41,18 +41,16 @@ func runAction(c *cli.Context) error {
 			token := parser.TOMLGetProfile(configCredentialsPath, profile)
 			fmt.Println("Using profile:", token)
 			for _, domain := range provider.Domains {
-				domainName := domain.Name
 				for _, record := range domain.Records {
-					recordType, recordValue := strings.ToLower(record.Source.Type), strings.ToLower(record.Source.Value)
+					domainName := domain.Name
+					recordType := strings.ToLower(record.Source.Type)
+					triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value
 					switch recordType {
 					case "get", "post":
-						triggerType, triggerValue := strings.ToLower(record.Trigger.Type), record.Trigger.Value
 						if triggerType == "cron_job" {
 							switch providerName {
 							case "netlify":
 								scheduler.Cron(triggerValue).Do(func() {
-									ip := getIP(recordValue, recordType)
-									fmt.Println(ip)
 									client.NetlifyUpdateRecord(domainName, &record, token)
 								})
 							}
