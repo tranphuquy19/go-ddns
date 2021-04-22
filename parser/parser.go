@@ -12,11 +12,11 @@ import (
 func ConfigYAMLParser(filePath string) Config {
 	config := Config{}
 
-	yamlFile, e1 := ioutil.ReadFile(filePath)
-	util.HandleError(e1, "An error occurred while reading the YAML file", "File: "+filePath)
+	yamlFile, err := ioutil.ReadFile(filePath)
+	util.HandleError(err, "An error occurred while reading the YAML file", "File: "+filePath)
 
-	e2 := yaml.Unmarshal(yamlFile, &config)
-	util.HandleError(e2, "An error occurred while parsing the YAML file", "File: "+filePath)
+	err = yaml.Unmarshal(yamlFile, &config)
+	util.HandleError(err, "An error occurred while parsing the YAML file", "File: "+filePath)
 	YAMLValidator(config)
 
 	return config
