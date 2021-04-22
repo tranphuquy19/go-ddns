@@ -16,7 +16,7 @@ func ConfigYAMLParser(filePath string) Config {
 	util.HandleError(e1, "An error occurred while reading the YAML file", "File: "+filePath)
 
 	e2 := yaml.Unmarshal(yamlFile, &config)
-	util.HandleError(e2, "An error occurred while passing the YAML file", "File: "+filePath)
+	util.HandleError(e2, "An error occurred while parsing the YAML file", "File: "+filePath)
 	YAMLValidator(config)
 
 	return config
