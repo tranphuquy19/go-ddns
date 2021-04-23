@@ -41,9 +41,7 @@ jobs:
       - name: Check version snapcraft
         run: snapcraft --version
 
-      - name: Jump to snap directory
-        run: cd snap
-
       - name: Build snap
+        working-directory: ./snap
         run: snapcraft --use-lxd
 
