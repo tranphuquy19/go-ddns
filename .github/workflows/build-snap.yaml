@@ -1,0 +1,22 @@
+name: Build snapcraft
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-snap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chekout repo
+        uses: actions/checkout@v2
+
+      - name: Install Snapcraft
+        uses: snapcore/action-build@v1
+        with:
+          path: ./snap
+          # snapcraft-args: --use-lxd

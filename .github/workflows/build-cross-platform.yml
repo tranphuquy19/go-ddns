@@ -1,4 +1,4 @@
-name: Build and Test
+name: Build cross platform
 
 on:
   push:
@@ -28,15 +28,3 @@ jobs:
 
       - name: Build
         run: bash ./build.sh
-  
-  build-snap:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Chekout repo
-        uses: actions/checkout@v2
-
-      - name: Install Snapcraft
-        uses: snapcore/action-build@v1
-        with:
-          path: ./snap
-          # snapcraft-args: --use-lxd
