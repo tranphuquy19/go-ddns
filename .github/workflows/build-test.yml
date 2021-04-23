@@ -28,3 +28,24 @@ jobs:
 
       - name: Build
         run: bash ./build.sh
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Chekout repo
+        uses: actions/checkout@v2
+
+      - name: Install Snapcraft
+        uses: samuelmeuli/action-snapcraft@v1
+        with:
+          use_lxd: true
+
+      - name: Check version snapcraft
+        run: snapcraft --version
+
+      - name: Jump to snap directory
+        run: cd snap
+
+      - name: Build snap
+        run: sg lxd -c 'snapcraft --use-lxd'
+
