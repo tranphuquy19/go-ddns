@@ -36,12 +36,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Snapcraft
-        uses: samuelmeuli/action-snapcraft@v1
-
-      - name: Check version snapcraft
-        run: snapcraft --version
-
-      - name: Build snap
-        working-directory: ./snap
-        run: snapcraft --use-lxd
-
+        uses: snapcore/action-build@v1
+        with:
+          path: ./snap
+          # snapcraft-args: --use-lxd
