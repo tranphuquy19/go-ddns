@@ -31,7 +31,6 @@ func runAction(c *cli.Context) error {
 	configCredentialsPath := filepath.Join(context, credentialsPath)
 
 	if !util.FileExists(configCredentialsPath) {
-		forever = false
 		fmt.Printf("Credentials file: %s does not exist\n", configCredentialsPath)
 	}
 
@@ -160,7 +159,6 @@ func err() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
-		forever = false
 	}
 }
 

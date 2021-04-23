@@ -12,7 +12,7 @@ var scheduler = gocron.NewScheduler(time.UTC)
 
 var configPath string
 var credentialsPath string
-var forever bool = false
+var forever = false
 
 func main() {
 	handleInterrupt() // Ctrl+C handler
