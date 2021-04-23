@@ -1,0 +1,29 @@
+name: go-ddns
+base: core18
+version: '0.0.2'
+summary: A powerful dynamic DNS client tool in Go. Support Cloudflare, Netlify, etc.
+description: |
+  A dynamic DNS client tool, supports to update multi-types record (A, AAAA, TXT,..) using multi-protocols (GET, POST, command-line,..)
+
+grade: devel
+confinement: strict
+
+apps:
+  go-ddns:
+    command: go-ddns run .
+
+parts:
+  go-ddns:
+    plugin: go
+    source: https://github.com/tranphuquy19/go-ddns.git
+    go-importpath: go-ddns
+
+plugs:
+  go-ddns-home:
+    interface: home
+  go-ddns-network:
+    interface: network
+  go-ddns-bind:
+    interface: network-bind
+  go-dddns-fs:
+    interface: system-files
