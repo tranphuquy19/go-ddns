@@ -15,6 +15,8 @@ var credentialsPath string
 var forever bool = false
 
 func main() {
+	handleInterrupt() // Ctrl+C handler
+
 	info()
 	commands()
 

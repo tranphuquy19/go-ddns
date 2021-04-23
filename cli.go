@@ -7,9 +7,11 @@ import (
 	"go-ddns/util"
 	"log"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"sort"
 	"strings"
+	"syscall"
 
 	"github.com/urfave/cli"
 )
@@ -160,4 +162,14 @@ func err() {
 		log.Fatal(err)
 		forever = false
 	}
+}
+
+func handleInterrupt() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\r- Ctrl+C pressed in Terminal")
+		os.Exit(0)
+	}()
 }
