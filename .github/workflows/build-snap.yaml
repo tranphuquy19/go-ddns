@@ -11,7 +11,7 @@ on:
       - dev
 
 jobs:
-  build-snap:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Chekout repo

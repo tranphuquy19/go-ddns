@@ -11,7 +11,7 @@ on:
       - dev
 
 jobs:
-  build-cross-platform:
+  build:
     strategy:
       matrix:
         go-version: [1.16.x]
