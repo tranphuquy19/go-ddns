@@ -15,6 +15,7 @@ apps:
 parts:
   go-ddns:
     plugin: go
+    go-channel: 1.16/stable
     source: https://github.com/tranphuquy19/go-ddns.git
     go-importpath: go-ddns
 
