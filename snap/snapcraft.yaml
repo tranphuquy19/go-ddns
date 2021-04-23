@@ -1,5 +1,8 @@
 name: go-ddns
 base: core18
+architectures:
+  - build-on: amd64
+    run-on: all
 version: '0.0.2'
 summary: A powerful dynamic DNS client tool in Go. Support Cloudflare, Netlify, etc.
 description: |
@@ -28,3 +31,7 @@ plugs:
     interface: network-bind
   go-dddns-fs:
     interface: system-files
+    read:
+      - /home
+    write:
+      - /home
