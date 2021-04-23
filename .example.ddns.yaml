@@ -1,4 +1,4 @@
-provider: 
+providers: 
   - name: Netlify
     profile: my-netlify-credential
     domains:

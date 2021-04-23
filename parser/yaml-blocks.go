@@ -1,7 +1,7 @@
 package parser
 
 type Config struct {
-	Providers []Provider `yaml:"provider" validate:"required,dive"`
+	Providers []Provider `yaml:"providers" validate:"required,dive"`
 }
 
 type Provider struct {
