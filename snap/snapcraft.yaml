@@ -10,7 +10,7 @@ confinement: strict
 
 apps:
   go-ddns:
-    command: go-ddns run .
+    command: go-ddns
 
 parts:
   go-ddns:
