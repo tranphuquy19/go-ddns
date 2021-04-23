@@ -33,7 +33,6 @@ func GetRecordById(zoneId string, recordId string, record *parser.Record) gjson.
 func NetlifyUpdateRecord(domainName string, record *parser.Record, token string) {
 	netlifyClient = InitNetlifyClient(token)
 	url := util.ParseRecordURL(record.Name, domainName)
-	// fmt.Println(url)
 	zones := GetDNSZones().Array()
 	zoneId := ""
 	for _, _zone := range zones {
