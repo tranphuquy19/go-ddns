@@ -6,6 +6,9 @@ test.yaml
 go-ddns
 go-ddns.exe
 
+# Ignore snap file
+*.snap
+
 # Ignore executable files in build folder
 build/*
 
