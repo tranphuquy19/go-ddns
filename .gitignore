@@ -5,6 +5,7 @@ ddns.yaml
 test.yaml
 go-ddns
 go-ddns.exe
+*.log
 
 # Ignore snap file
 *.snap

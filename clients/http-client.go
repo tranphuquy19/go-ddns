@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go-ddns/util"
 	"io"
+	"log"
 	"net/http"
 	"time"
 )
@@ -47,6 +48,7 @@ func (c *HttpClient) Del(values []byte, endpoint ...string) (string, error) {
 
 func worker(method string, c *HttpClient, values []byte, endpoint ...string) (string, error) {
 	url := util.ParseURL(c.BaseURL, endpoint...)
+	log.Println("HTTP_REQUEST", "METHOD:", method, "---URL:", url, "---VALUES: ", string(values))
 
 	var (
 		req *http.Request
@@ -74,7 +76,6 @@ func worker(method string, c *HttpClient, values []byte, endpoint ...string) (st
 
 	body, _ := io.ReadAll(res.Body)
 	bodyStr := string(body)
-	// fmt.Println("RESPONSE", bodyStr, "REQUEST", "BODY", string(values), "METHOD", method)
 
 	return bodyStr, err
 }
