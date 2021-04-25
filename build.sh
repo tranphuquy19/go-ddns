@@ -31,7 +31,7 @@ while read line; do
     GOOS=${temp[0]}
     GOARCH=${temp[1]}
 
-    output_name='go-ddns'
+    output_name=$APP_NAME
 
     if [ $GOOS = "windows" ]; then
         output_name+='.exe'
