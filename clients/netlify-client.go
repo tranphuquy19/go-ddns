@@ -106,16 +106,23 @@ func NetlifyUpdateRecord(domainName string, record *parser.Record, token string)
 		}
 	}
 	var gotRecord = getRecord(zoneId, url)
-
 	crtIp := <-currentIP
+
 	if crtIp != "" {
 		if crtIp != gotRecord.Value {
 			log.Println("NETLIFY", "DETECT_IP_CHANGE:", gotRecord.Hostname, "---OLD:", gotRecord.Value, "---NEW:", crtIp)
-			DelRecordById(zoneId, gotRecord.Id, record)
-			gotRecord.Value = crtIp
-			jsonNewRecord := fmt.Sprintf(`{ "hostname": "%s", "type": "%s", "ttl": %d, "value": "%s" }`, gotRecord.Hostname, gotRecord.Type, gotRecord.TTL, gotRecord.Value)
-			values := []byte(jsonNewRecord)
-			CreateRecord(zoneId, values)
+			if gotRecord.Value != "" {
+				DelRecordById(zoneId, gotRecord.Id, record)
+				gotRecord.Value = crtIp
+				jsonNewRecord := fmt.Sprintf(`{ "hostname": "%s", "type": "%s", "ttl": %d, "value": "%s" }`, gotRecord.Hostname, gotRecord.Type, gotRecord.TTL, gotRecord.Value)
+				values := []byte(jsonNewRecord)
+				CreateRecord(zoneId, values)
+			} else {
+				log.Println("NETLIFY", "RECORD_NOT_FOUND:", "---CREATING_RECORD:", url)
+				jsonNewRecord := fmt.Sprintf(`{ "hostname": "%s", "type": "%s", "ttl": %d, "value": "%s" }`, url, record.Type, record.TTL, crtIp)
+				values := []byte(jsonNewRecord)
+				CreateRecord(zoneId, values)
+			}
 		}
 	} else {
 		util.HandleError(nil, "Cannot get your public IP")

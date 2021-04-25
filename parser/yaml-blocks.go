@@ -17,6 +17,7 @@ type Domain struct {
 
 type Record struct {
 	Name    string  `yaml:"name" validate:"required"`
+	Type    string  `yaml:"type" validate:"required"`
 	Source  Source  `yaml:"source" validate:"required,dive,required"`
 	Trigger Trigger `yaml:"trigger" validate:"required,dive,required"`
 	TTL     uint32  `yaml:"TTL" validate:"number,gt=0,max=2147483647"`
