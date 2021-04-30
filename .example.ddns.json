@@ -1,54 +1,54 @@
 {
-  "config": [
+  "providers": [
     {
-      "provider": "Netlify",
+      "name": "Netlify",
       "profile": "my-netlify-credential",
       "domains": [
         {
-          "name": "domain1.tk",
+          "name": "example.tk",
           "records": [
             {
-              "name": "api",
+              "name": "@",
               "type": "A",
-              "TTL": 1,
-              "value": {
-                "type": "IPv4",
-                "value": "102.145.20.72"
+              "TTL": 3600,
+              "source": {
+                "value": "1.2.3.4",
+                "type": "IPv4"
               },
-              "interval": {
-                "unit": "minute",
-                "value": 1
+              "trigger": {
+                "type": "cron_job",
+                "value": "0,15,30,45 * * * *"
               }
             },
             {
-              "name": "mysql",
-              "type": "A",
-              "TTL": 1,
-              "value": {
-                "type": "CNAME",
-                "value": "database.ddns.net"
+              "name": "pgadmin",
+              "type": "TXT",
+              "TTL": 3600,
+              "source": {
+                "value": "test-string",
+                "type": "TXT"
               },
-              "interval": {
-                "unit": "second",
-                "value": 1
+              "trigger": {
+                "type": "cron_job",
+                "value": "0,15,30,45 * * * *"
               }
-            }
-          ]
-        },
-        {
-          "name": "domain3.tk",
-          "records": [
+            },
             {
-              "name": "api.dev",
+              "name": "api",
               "type": "A",
-              "TTL": 1,
-              "value": {
-                "type": "IPv4",
-                "value": "102.145.20.72"
+              "TTL": 3600,
+              "source": {
+                "value": "https://api.ipify.org",
+                "type": "GET"
               },
-              "interval": {
-                "unit": "minute",
-                "value": 1
+              "trigger": {
+                "type": "SPEC_TIME",
+                "values": [
+                  "2021/04/12 00:40:30",
+                  "2021-04-11T17:37:36.295Z",
+                  "Sun, 11 Apr 2021 17:38:06 GMT",
+                  "1618163331556"
+                ]
               }
             }
           ]
@@ -56,23 +56,36 @@
       ]
     },
     {
-      "provider": "CloudFlare",
+      "name": "Cloudflare",
       "profile": "my-cloudflare-credential",
       "domains": [
         {
-          "name": "domain2.tk",
+          "name": "example.tk",
           "records": [
             {
-              "name": "api.dev",
+              "name": "@",
               "type": "A",
-              "TTL": 1,
-              "value": {
-                "type": "IPv4",
-                "value": "102.145.20.72"
+              "TTL": 3600,
+              "source": {
+                "value": "1.2.3.4",
+                "type": "IPv4"
               },
-              "interval": {
-                "unit": "day",
-                "value": 1
+              "trigger": {
+                "type": "cron_job",
+                "value": "0,15,30,45 * * * *"
+              }
+            },
+            {
+              "name": "pgadmin",
+              "type": "TXT",
+              "TTL": 3600,
+              "source": {
+                "value": "test",
+                "type": "TXT"
+              },
+              "trigger": {
+                "type": "cron_job",
+                "value": "0,15,30,45 * * * *"
               }
             }
           ]
