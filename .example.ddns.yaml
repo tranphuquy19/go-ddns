@@ -19,7 +19,7 @@ providers:
             TTL: 3600
             source:
               value: "test-string"
-              type: TXT
+              type: text
             trigger:
               type: cron_job
               value: "0,15,30,45 * * * *"
@@ -55,7 +55,7 @@ providers:
             TTL: 3600
             source:
               value: test
-              type: TXT
+              type: text
             trigger:
               type: cron_job
               value: "0,15,30,45 * * * *"
