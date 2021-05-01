@@ -21,6 +21,7 @@ type Record struct {
 	Source  Source  `yaml:"source" validate:"required,dive,required"`
 	Trigger Trigger `yaml:"trigger" validate:"required,dive,required"`
 	TTL     uint32  `yaml:"TTL" validate:"number,gt=0,max=2147483647"`
+	URL     string  // Domain.Name + Record.Name
 }
 
 type Source struct {
